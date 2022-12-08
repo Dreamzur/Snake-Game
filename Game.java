@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class Game extends JPanel implements ActionListener {
 
     static final int WIDTH = 600;
     static final int HEIGHT = 600;
@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
-    GamePanel(){
+    Game(){
         random = new Random();
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setBackground(Color.black);
@@ -41,11 +41,6 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
 
         if (running) {
-            //making a grid for easier visualization
-            for (int i = 0; i < HEIGHT / UNIT_SIZE; i++) {
-                g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, HEIGHT);
-                g.drawLine(0, i * UNIT_SIZE, WIDTH, i * UNIT_SIZE);
-            }
             //setting color of apple
                 g.setColor(Color.red);
                 g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
@@ -60,10 +55,9 @@ public class GamePanel extends JPanel implements ActionListener {
                     g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
             }
-                g.setColor(Color.red);
-                g.setFont(new Font("Rockwell", Font.BOLD, 40));
-                FontMetrics metrics = getFontMetrics(g.getFont());
-                g.drawString("Score: " + applesEaten, (WIDTH - metrics.stringWidth("Score: " + applesEaten))/2, g.getFont().getSize());
+                g.setColor(Color.white);
+                g.setFont(new Font("Arial", Font.PLAIN, 30));
+                g.drawString("Score: " + applesEaten, 0, g.getFont().getSize());
         }
         else{
             gameOver(g);
@@ -85,8 +79,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void newApple(){
         //generates a new apple
-        appleX = random.nextInt((int)(WIDTH/UNIT_SIZE))*UNIT_SIZE;
-        appleY = random.nextInt((int)(HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+        appleX = random.nextInt((WIDTH/UNIT_SIZE))*UNIT_SIZE;
+        appleY = random.nextInt((HEIGHT/UNIT_SIZE))*UNIT_SIZE;
     }
     public void checkApple(){
         if((x[0] == appleX) && (y[0] == appleY)){
@@ -99,8 +93,9 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkCollisions(){
         //checks if snake head collides with body
         for (int i = snakeLength; i > 0; i--){
-            if ((x[0] == x[i]) && (y[0] == y[i])){
+            if ((x[0] == x[i]) && (y[0] == y[i])) {
                 running = false;
+                break;
             }
         }
         //checks if snake head touches borders
@@ -116,8 +111,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void gameOver(Graphics g){
         //displays score
-        g.setColor(Color.red);
-        g.setFont(new Font("Rockwell",Font.BOLD, 40));
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial",Font.PLAIN, 40));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
         g.drawString("Score: " + applesEaten, (WIDTH - metrics1.stringWidth("Score: " + applesEaten))/2, g.getFont().getSize());
         //setting game over text
