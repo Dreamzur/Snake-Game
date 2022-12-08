@@ -25,7 +25,7 @@ public class Game extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setBackground(Color.black);
         this.setFocusable(true);
-        this.addKeyListener(new MyKeyAdapter());
+        this.addKeyListener(new keysPressed());
         startGame();
     }
     public void startGame(){
@@ -56,7 +56,7 @@ public class Game extends JPanel implements ActionListener {
                 }
             }
                 g.setColor(Color.white);
-                g.setFont(new Font("Arial", Font.PLAIN, 30));
+                g.setFont(new Font("arial", Font.PLAIN, 30));
                 g.drawString("Score: " + applesEaten, 0, g.getFont().getSize());
         }
         else{
@@ -81,6 +81,12 @@ public class Game extends JPanel implements ActionListener {
         //generates a new apple
         appleX = random.nextInt((WIDTH/UNIT_SIZE))*UNIT_SIZE;
         appleY = random.nextInt((HEIGHT/UNIT_SIZE))*UNIT_SIZE;
+
+        for (int i = 0; i < snakeLength; i++){
+            if (x[i] == appleX && y[i] == appleY){
+                newApple();
+            }
+        }
     }
     public void checkApple(){
         if((x[0] == appleX) && (y[0] == appleY)){
@@ -112,7 +118,7 @@ public class Game extends JPanel implements ActionListener {
     public void gameOver(Graphics g){
         //displays score
         g.setColor(Color.white);
-        g.setFont(new Font("Arial",Font.PLAIN, 40));
+        g.setFont(new Font("arial",Font.PLAIN, 40));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
         g.drawString("Score: " + applesEaten, (WIDTH - metrics1.stringWidth("Score: " + applesEaten))/2, g.getFont().getSize());
         //setting game over text
@@ -120,6 +126,12 @@ public class Game extends JPanel implements ActionListener {
         g.setFont(new Font("Rockwell",Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (WIDTH - metrics2.stringWidth("Game Over"))/2, HEIGHT/2);
+        //TODO
+        //setting up restart text
+        g.setColor(Color.white);
+        g.setFont(new Font("arial",Font.BOLD, 25));
+        g.drawString("Press Space to restart.", 160, 400);
+        
     }
 
     @Override
@@ -133,7 +145,7 @@ public class Game extends JPanel implements ActionListener {
         repaint();
     }
 
-    public class MyKeyAdapter extends KeyAdapter{
+    public class keysPressed extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e){
             //controlling the snake
