@@ -59,23 +59,29 @@ public class Game extends JPanel implements ActionListener {
                 g.setFont(new Font("arial", Font.PLAIN, 30));
                 g.drawString("Score: " + applesEaten, 0, g.getFont().getSize());
         }
-        else{
-            gameOver(g);
+        else gameOver(g);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if(running){
+            move();
+            checkApple();
+            checkCollisions();
         }
+        repaint();
     }
     public void move(){
         for (int i = snakeLength;i > 0;i--){
             x[i] = x[i-1];
             y[i] = y[i-1];
         }
-
         switch (direction) {
             case 'U' -> y[0] = y[0] - UNIT_SIZE;
             case 'D' -> y[0] = y[0] + UNIT_SIZE;
             case 'L' -> x[0] = x[0] - UNIT_SIZE;
             case 'R' -> x[0] = x[0] + UNIT_SIZE;
         }
-
     }
     public void newApple(){
         //generates a new apple
@@ -94,7 +100,6 @@ public class Game extends JPanel implements ActionListener {
             applesEaten++;
             newApple();
         }
-
     }
     public void checkCollisions(){
         //checks if snake head collides with body
@@ -112,8 +117,6 @@ public class Game extends JPanel implements ActionListener {
         if (!running){
             timer.stop();
         }
-
-
     }
     public void gameOver(Graphics g){
         //displays score
@@ -130,20 +133,22 @@ public class Game extends JPanel implements ActionListener {
         //setting up restart text
         g.setColor(Color.white);
         g.setFont(new Font("arial",Font.BOLD, 25));
-        g.drawString("Press Space to restart.", 160, 400);
-        
+        g.drawString("Press any key to restart.", 160, 380);
+
+
+    }
+    public void restartGame() {
+        setVisible(false);
+        new GameFrame();
+        dispose();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if(running){
-            move();
-            checkApple();
-            checkCollisions();
-        }
-        repaint();
+    public void dispose() {
+        //closes last window
+        JFrame parent = (JFrame) this.getTopLevelAncestor();
+        parent.dispose();
     }
+
 
     public class keysPressed extends KeyAdapter{
         @Override
@@ -172,9 +177,7 @@ public class Game extends JPanel implements ActionListener {
                         }
                         break;
                 }
-            } else {
-                startGame();
-            }
+            } else restartGame();
         }
     }
 }
