@@ -38,11 +38,11 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void loadImages() {
-        ImageIcon appl = new ImageIcon("src/resources/apple.png");
+        ImageIcon appl = new ImageIcon("apple.png");
         apple = appl.getImage();
-        ImageIcon hed = new ImageIcon("src/resources/head.png");
+        ImageIcon hed = new ImageIcon("head.png");
         head = hed.getImage();
-        ImageIcon bod = new ImageIcon("src/resources/body.png");
+        ImageIcon bod = new ImageIcon("body.png");
         body = bod.getImage();
     }
 
