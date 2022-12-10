@@ -154,7 +154,7 @@ public class Game extends JPanel implements ActionListener {
         //setting up restart text
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.BOLD, 25));
-        g.drawString("Press any key to restart.", 160, 380);
+        g.drawString("Press SPACE to restart.", 160, HEIGHT / 2 + 50);
 
 
     }
