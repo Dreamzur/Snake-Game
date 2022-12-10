@@ -8,7 +8,7 @@ Still adding features to the game. :smile:
 Currently looking to add:
 - [x] Image for snake head & body
 - [x] Restart game option
-- [] Game ending apples (bad apples)
-- [] Sound
+- [ ] Game ending apples (bad apples)
+- [ ] Sound
 
 
