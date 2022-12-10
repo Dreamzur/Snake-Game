@@ -12,9 +12,10 @@ Currently looking to add:
 - [ ] Gradual speed increase after eating apple
 - [ ] More bad apples on screen
 
-# Features needing to be fixed :wrench:
-- [ ] Still hunting for bugs :bug:
+## Features needing to be fixed :wrench:
+- [ ] Currently hunting for bugs :bug:
 
-# Scrapped Features 
-Due to replit not reading the audio file, these features will be scrapped now now:
+## Scrapped
 - [x] Sound
+Due to replit not loading audio file, for now this feature will be scrapped
+
