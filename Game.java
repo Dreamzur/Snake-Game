@@ -17,16 +17,13 @@ public class Game extends JPanel implements ActionListener {
     final int[] y = new int[GAME_UNITS];
     int snakeLength = 1;
     int applesEaten;
-    int appleX;
-    int appleY;
+    int appleX, badAppleX;
+    int appleY, badAppleY;
     char direction = 'R';
     boolean running = false;
     Timer timer;
     Random random;
-    Image apple;
-    Image head;
-    Image body;
-
+    Image apple, head, body, enemy;
     Game() {
         random = new Random();
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -44,10 +41,13 @@ public class Game extends JPanel implements ActionListener {
         head = hed.getImage();
         ImageIcon bod = new ImageIcon("body.png");
         body = bod.getImage();
+        ImageIcon enem = new ImageIcon("enemy.png");
+        enemy = enem.getImage();
     }
 
     public void startGame() {
         newApple();
+        badApple();
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
@@ -63,6 +63,8 @@ public class Game extends JPanel implements ActionListener {
         if (running) {
             //drawing apple
             g.drawImage(apple, appleX, appleY, this);
+            //drawing enemy (bad apple)
+            g.drawImage(enemy, badAppleX, badAppleY, this);
 
             //drawing body parts of snake
             for (int i = 0; i < snakeLength; i++) {
@@ -113,12 +115,28 @@ public class Game extends JPanel implements ActionListener {
             }
         }
     }
+    public void badApple() {
+        //generates an enemy apple (bad apple)
+        badAppleX = random.nextInt((WIDTH / UNIT_SIZE)) * UNIT_SIZE;
+        badAppleY = random.nextInt((HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
+
+        for (int i = 0; i < snakeLength; i++) {
+            if (x[i] == appleX && y[i] == appleY) {
+                badApple();
+            }
+        }
+    }
 
     public void checkApple() {
         if ((x[0] == appleX) && (y[0] == appleY)) {
             snakeLength++;
             applesEaten++;
             newApple();
+        }
+        else if ((x[0] == badAppleX) && (y[0] == badAppleY)){
+            snakeLength--;
+            applesEaten--;
+            badApple();
         }
     }
 
