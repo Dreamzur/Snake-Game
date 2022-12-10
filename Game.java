@@ -63,6 +63,7 @@ public class Game extends JPanel implements ActionListener {
         if (running) {
             //drawing apple
             g.drawImage(apple, appleX, appleY, this);
+          
             //drawing enemy (bad apple)
             g.drawImage(enemy, badAppleX, badAppleY, this);
 
@@ -121,7 +122,7 @@ public class Game extends JPanel implements ActionListener {
         badAppleY = random.nextInt((HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
 
         for (int i = 0; i < snakeLength; i++) {
-            if (x[i] == appleX && y[i] == appleY) {
+            if (x[i] == badAppleX && y[i] == badAppleY) {
                 badApple();
             }
         }
