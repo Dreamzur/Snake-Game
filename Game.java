@@ -1,13 +1,9 @@
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.Random;
 
 public class Game extends JPanel implements ActionListener {
@@ -34,24 +30,8 @@ public class Game extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new keysPressed());
-        playSound();
         loadImages();
         startGame();
-    }
-    public void playSound(){
-        //loads in sound file
-        File file = new File("backgroundAudio.wav");
-        try{
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(file));
-            //lowers the volume of sound file
-            FloatControl gainControl =
-                    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-10.0f);
-            clip.start();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
     public void loadImages() {
         ImageIcon appl = new ImageIcon("apple.png");
@@ -63,7 +43,6 @@ public class Game extends JPanel implements ActionListener {
         ImageIcon enem = new ImageIcon("enemy.png");
         enemy = enem.getImage();
     }
-
     public void startGame() {
         newApple();
         badApple();
@@ -71,12 +50,10 @@ public class Game extends JPanel implements ActionListener {
         timer = new Timer(DELAY, this);
         timer.start();
     }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
     }
-
     public void draw(Graphics g) {
 
         if (running) {
